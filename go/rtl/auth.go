@@ -137,7 +137,22 @@ func (s *AuthSession) Do(result interface{}, method, ver, path string, reqPars m
 		return fmt.Errorf("response error: %s", res.Status)
 	}
 
-	err = json.NewDecoder(res.Body).Decode(&result)
+	resBody, err := ioutil.ReadAll(res.Body)
+
+   	if err != nil {
+		return err
+	}
+
+    if json.Valid([]byte(resBody)) {
+        json.Unmarshal(resBody, &result)
+    } else {
+        n := result.(*string)
+        string_response := string(resBody)
+        *n = string_response
+    }
+
+    return nil
+}
 
 	return nil
 }
