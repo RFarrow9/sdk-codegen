@@ -1,4 +1,4 @@
-module github.com/RFarrow9/sdk-codegen/go
+module github.com/looker-open-source/sdk-codegen/go
 
 go 1.14
 
